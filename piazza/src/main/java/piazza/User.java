@@ -2,7 +2,7 @@ package piazza;
 
 /**
  *
- * @author sveinbra
+ * @author thomabsk
  */
 
 import java.sql.*;
@@ -17,8 +17,11 @@ public class User extends ActiveDomainObject {
         this.email = email;
     }
 
-    public String getPassw(){
-        return password;
+    public boolean checkCorrectPassword(String password){
+        return this.password.equals(password);
+    }
+    public String getUserName(){
+        return this.email;
     }
     public void initialize (Connection conn) {
         try {
@@ -32,6 +35,7 @@ public class User extends ActiveDomainObject {
                 password = rs.getString("password");
                 type = rs.getString("type");
             }
+            loginUser.close();
 
         } catch (Exception e) {
             System.out.println("db error during select of bruker= "+e);

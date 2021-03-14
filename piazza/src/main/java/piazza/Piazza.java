@@ -22,6 +22,15 @@ public class Piazza {
         else{
             System.out.println("Login failed!"); 
         }
+
+
+        MakePostCtrl makePostCtrl = new MakePostCtrl(loginCtrl);
+
+        makePostCtrl.setFolderName("Exam");
+        makePostCtrl.setTag("Yolo");
+        makePostCtrl.setText("hvordan");
+
+        makePostCtrl.makePost();
         // LagAvtaleCtrl lagAvtaleCtrl = new LagAvtaleCtrl ();
         // lagAvtaleCtrl.lagAvtale(100, 120);
         // lagAvtaleCtrl.velgBruker(1);

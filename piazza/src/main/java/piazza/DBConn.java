@@ -9,6 +9,12 @@ import java.sql.*;
 import java.util.Properties;
 
 public abstract class DBConn {
+
+    //Edit these to connect to your own database
+    private static final String DB_NAME = "piazza";
+    private static final String DB_USERNAME = "Thomas";
+    private static final String DB_PASSWORD = "vbdatdat123";
+
     protected Connection conn;
     public DBConn () {
     }
@@ -18,9 +24,9 @@ public abstract class DBConn {
 	    Class.forName("com.mysql.cj.jdbc.Driver"); 
 	    // Properties for user and password.
             Properties p = new Properties();
-            p.put("user", "Thomas");
-            p.put("password", "vbdatdat123");           
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/piazza?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false",p);
+            p.put("user", DB_USERNAME);
+            p.put("password", DB_PASSWORD);           
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/"+DB_NAME+"?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false",p);
         } catch (Exception e)
     	{
             throw new RuntimeException("Unable to connect", e);

@@ -18,6 +18,11 @@ public class UserLoginCtrl extends DBConn {
         }
     }
 
+    
+    public String getUserName(){
+        return user.getUserName();
+    }
+    
     public boolean isLoggedIn(){
         return logged_in;
     }
@@ -25,7 +30,7 @@ public class UserLoginCtrl extends DBConn {
         user = new User(email);
         user.initialize(conn);
 
-        if(password.equals(user.getPassw())){ 
+        if(user.checkCorrectPassword(password)){ 
             logged_in = true;
             return true;
         }
