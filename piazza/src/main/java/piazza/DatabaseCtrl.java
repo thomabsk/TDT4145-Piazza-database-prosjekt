@@ -1,30 +1,26 @@
 // package piazza;
 // import java.sql.*;
-// public class DatabaseCtrl {
+// import java.io.BufferedReader;
+// import java.io.FileNotFoundException;
+// import java.io.FileReader;
+// import java.io.Reader;
+// import org.apache.ibatis.jdbc.ScriptRunner;
+
+// public class DatabaseCtrl extends DBConn {
     
 
-//     public ResultSet executeQuery(Connection conn, String query, Object... o){
+//     public void initSchema(){
 //         try{
-//         PreparedStatement execQuery = conn.prepareStatement(query);
-//         int it = 1;
-//         for (Object obj : o){
-//             if(obj instanceof Integer){
-//                 execQuery.setInt(it,(Integer) obj);
-//             }
-//             if(obj instanceof String){
-//                 execQuery.setString(it, (String) obj);
-//             }
-
-//             it += 1;
+//         //Initialize the script runner
+//         ScriptRunner sr = new ScriptRunner(conn);
+//         //Creating a reader object
+//         Reader reader = new BufferedReader(new FileReader("project_sql_script.sql"));
+//         //Running the script
+//         sr.runScript(reader);
 //         }
-//         execQuery.executeQuery();
-//         ResultSet rs = execQuery.getResultSet();
-//         } catch (Exception e) {
-//             System.out.println("db error during making of post= "+e);
-//             ResultSet rs_fail = new ResultSet;
-//             return rs;
+//         catch (Exception e) {
+//             System.out.println("db init schema error = "+e);
+//             return;
 //         }
-
 //     }
-
 // }

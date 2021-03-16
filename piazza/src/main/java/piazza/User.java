@@ -23,6 +23,10 @@ public class User extends ActiveDomainObject {
     public String getUserName(){
         return this.email;
     }
+
+    public String getUserType(){
+        return this.type;
+    }
     public void initialize (Connection conn) {
         try {
             //Statement stmt = conn.createStatement();

@@ -18,7 +18,9 @@ public class UserLoginCtrl extends DBConn {
         }
     }
 
-    
+    public String getUserType(){
+        return user.getUserType();
+    }
     public String getUserName(){
         return user.getUserName();
     }
