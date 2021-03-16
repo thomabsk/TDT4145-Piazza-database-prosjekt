@@ -23,7 +23,7 @@ public class InstructorViewStatsCtrl extends DBConn {
     public void getUserStatistics(){
         try {
         //FIND THE ID OF THE POST
-        String query = "select distinct user.userName, count(UserPost.postID) as numCreatedPosts, count(UserViewedPost.postID) as numViewedPosts from user left join UserPost on user.userName = UserPost.userName left join UserViewedPost on user.userName = UserViewedPost.userName group by user.userName order by numViewedPosts desc";
+        String query = "select user.userName, count(UserPost.postID) as numCreatedPosts, count(UserViewedPost.postID) as numViewedPosts from user left join UserPost on user.userName = UserPost.userName left join UserViewedPost on user.userName = UserViewedPost.userName group by user.userName order by numViewedPosts desc";
         PreparedStatement getPostID = conn.prepareStatement(query);
         getPostID.executeQuery();
         ResultSet rs = getPostID.getResultSet();
