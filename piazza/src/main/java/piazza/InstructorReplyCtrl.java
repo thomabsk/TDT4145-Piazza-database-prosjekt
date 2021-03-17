@@ -26,6 +26,33 @@ public class InstructorReplyCtrl extends DBConn{
     public void setText(String text){
         this.text = text;
     }
+
+    public void viewAvailableThreads(){
+        try {
+            //FIND THE ID OF THE POST
+            String query = "select postID, text from thread natural join post";
+            PreparedStatement getPosts = conn.prepareStatement(query);
+            getPosts.executeQuery();
+            ResultSet rs = getPosts.getResultSet();
+            String firstCol = "PostID";
+            String secondCol = "Text";
+            System.out.println("\n\n------------------------------------------------------");
+            System.out.format("|%-20s|%-15s%n",firstCol,secondCol);
+            System.out.println("------------------------------------------------------");
+            while(rs.next()) {
+                int postID = rs.getInt("postID");
+                String text = rs.getString("text");
+                //System.out.println(userName + ": " + numCreatedPosts+ " " + numViewedPosts);
+                System.out.format("|%-20d|%-15s%n", postID, text);
+            }
+            System.out.println("------------------------------------------------------");
+            getPosts.close();
+            }
+            catch (Exception e) {
+                System.out.println("db error during getting user statistics "+e);
+                return;
+            }
+    }
     public void makeReply(){
         try{
 
@@ -39,10 +66,7 @@ public class InstructorReplyCtrl extends DBConn{
         while (rs.next()) {
             this.threadID = rs.getInt("threadID");
         }
-
-        System.out.println(this.threadID);
         findFolder.close();
-
 
         //INSERT NEW POST INTO THREAD
         query = "insert into post (text, nrGoodComment, threadID) values (?,?,?)";
@@ -57,7 +81,7 @@ public class InstructorReplyCtrl extends DBConn{
         conn.commit();
 
 
-        //CONNECT THE USER TO THE POST
+        //ADDS THE CREATED POST TO THE USER
         query = "insert into UserPost values (?,?,current_timestamp)";
         PreparedStatement userPost= conn.prepareStatement(query);
         userPost.setString(1,userLoginCtrl.getUserName());
@@ -66,6 +90,17 @@ public class InstructorReplyCtrl extends DBConn{
         userPost.close();
 
         conn.commit();
+
+        //ADDS THE VIEWED POST TO THE USER
+        query = "insert into UserViewedPost values (?,?,current_timestamp)";
+        PreparedStatement userViewedPost= conn.prepareStatement(query);
+        userViewedPost.setString(1,userLoginCtrl.getUserName());
+        userViewedPost.setInt(2, this.postID);
+        userViewedPost.executeUpdate();
+        userViewedPost.close();
+
+        conn.commit();
+
 
 
         //UPDATE THREAD WITH COLOR
@@ -78,7 +113,7 @@ public class InstructorReplyCtrl extends DBConn{
         
         conn.commit();
 
-        
+        System.out.println("You made the comment!");
 
         } catch (Exception e) {
             System.out.println("db error during making of post= "+e);

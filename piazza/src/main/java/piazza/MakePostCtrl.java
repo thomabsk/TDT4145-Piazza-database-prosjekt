@@ -5,6 +5,7 @@ import java.sql.*;
 
 
 public class MakePostCtrl extends DBConn {
+    private String courseName;
     private String folderName;
     private int folderID;
     private String tag;
@@ -37,12 +38,50 @@ public class MakePostCtrl extends DBConn {
     public void setText(String text){
         this.text = text;
     }
+
+    public void setCourseName(String courseName){
+        this.courseName = courseName;
+    }
+
+    public void viewAvailableFolders(){
+        try {
+            //FIND THE ID OF THE POST
+            String query = "select * from folder";
+            PreparedStatement getPostID = conn.prepareStatement(query);
+            getPostID.executeQuery();
+            ResultSet rs = getPostID.getResultSet();
+            String firstCol = "folderID";
+            String secondCol = "Name";
+            String thirdCol = "courseID";
+            System.out.println("\n\n------------------------------------------");
+            System.out.format("|%-8s|%-15s|%-15s|%n",firstCol,secondCol,thirdCol);
+            System.out.println("------------------------------------------");
+            while(rs.next()) {
+                int folderIDLocal = rs.getInt("folderID");
+                String nameLocal = rs.getString("name");
+                String courseIDLocal = rs.getString("courseID");
+                //System.out.println(userName + ": " + numCreatedPosts+ " " + numViewedPosts);
+                System.out.format("|%-8d|%-15s|%-15s|%n", folderIDLocal, nameLocal, courseIDLocal);
+            }
+            System.out.println("------------------------------------------");
+            getPostID.close();
+            }
+            catch (Exception e) {
+                System.out.println("db error during getting user statistics "+e);
+                return;
+            }
+    }
     public void makePost(){
         try {
+
+
+            
+
             //FIND FOLDER ID FROM FOLDER NAME
-            String query = "select folderID from folder where name=?";
+            String query = "select folderID from folder where name=? and courseID=?";
             PreparedStatement findFolder = conn.prepareStatement(query);
             findFolder.setString(1,folderName);
+            findFolder.setString(2,courseName);
             findFolder.executeQuery();
             ResultSet rs = findFolder.getResultSet();
             while (rs.next()) {
@@ -121,6 +160,7 @@ public class MakePostCtrl extends DBConn {
 
         } catch (Exception e) {
             System.out.println("db error during making of post= "+e);
+            System.out.println("\n\nAre you sure you added legal parameters? Try again!");
             return;
         }
     }

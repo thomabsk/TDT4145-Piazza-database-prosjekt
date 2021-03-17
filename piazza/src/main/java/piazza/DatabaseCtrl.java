@@ -7,8 +7,6 @@
 // import org.apache.ibatis.jdbc.ScriptRunner;
 
 // public class DatabaseCtrl extends DBConn {
-    
-
 //     public void initSchema(){
 //         try{
 //         //Initialize the script runner
