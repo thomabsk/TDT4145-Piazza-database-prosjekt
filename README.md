@@ -17,8 +17,8 @@ This Java program uses SQL to solve the Piazza project given in TDT4145 Database
 3. Run *testInput.sql* to fill the tables.
 4. Run *piazza.java*.
 5. Log in as instructor:
-username: *t@s.com* 
-password: *thomas123*
-Or log in as student:
-username: *geir@outlook.no*
+username: *t@s.com*, 
+password: *thomas123*,
+6. Or log in as student:
+username: *geir@outlook.no*,
 password: *pizzabolle*
