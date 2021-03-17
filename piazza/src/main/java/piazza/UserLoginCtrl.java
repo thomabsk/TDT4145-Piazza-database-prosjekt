@@ -28,17 +28,15 @@ public class UserLoginCtrl extends DBConn {
     public boolean isLoggedIn(){
         return logged_in;
     }
-    public boolean loginUser(String email, String password){
+    public void loginUser(String email, String password){
         user = new User(email);
         user.initialize(conn);
 
         if(user.checkCorrectPassword(password)){ 
             logged_in = true;
-            return true;
         }
         else {
             logged_in = false;
-            return false;
         }
     }
 

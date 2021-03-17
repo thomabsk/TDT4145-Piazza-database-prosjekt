@@ -6,7 +6,6 @@ package piazza;
  */
 
 import java.sql.*;
-import java.util.*;
 
 public class User extends ActiveDomainObject {
     private String email;

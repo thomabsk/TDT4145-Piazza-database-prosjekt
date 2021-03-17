@@ -1,6 +1,5 @@
 package piazza;
 
-//import javax.xml.crypto.Data;
 import java.util.*;
 
 /**
@@ -35,7 +34,7 @@ public class Piazza {
                     System.out.println("\nEnter password: ");
                     String password = myInput.nextLine();
                     
-                    boolean h = loginCtrl.loginUser(userName, password);
+                    loginCtrl.loginUser(userName, password);
                     if(loginCtrl.isLoggedIn()){ 
                         loggedIntoAUser = true;
                     }
@@ -108,7 +107,7 @@ public class Piazza {
                 case 5: {
                     if(loggedIntoAUser){
                         if(loginCtrl.getUserType().equals("instructor")){
-                            InstructorViewStatsCtrl stats = new InstructorViewStatsCtrl(loginCtrl);
+                            InstructorViewStatsCtrl stats = new InstructorViewStatsCtrl();
                             stats.getUserStatistics();
                         }
                         else{
@@ -120,10 +119,12 @@ public class Piazza {
                         System.out.println("You are not logged in as an instructor!\n\n");
                         
                     }
+                    break;
                 }
                 case 6: {
                     loginCtrl = new UserLoginCtrl();
                     loggedIntoAUser = false;
+                    break;
                 }
                 
             }

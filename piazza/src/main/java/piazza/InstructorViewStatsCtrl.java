@@ -2,15 +2,13 @@ package piazza;
 
 
 import java.sql.*;
-import java.util.*;
+
 
 
 public class InstructorViewStatsCtrl extends DBConn {
-    private UserLoginCtrl userLoginCtrl;
 
-    public InstructorViewStatsCtrl (UserLoginCtrl userLoginCtrl) {
+    public InstructorViewStatsCtrl() {
         connect();
-        this.userLoginCtrl = userLoginCtrl;
         try {
             conn.setAutoCommit(false);
         } catch (SQLException e) {
@@ -23,7 +21,7 @@ public class InstructorViewStatsCtrl extends DBConn {
     public void getUserStatistics(){
         try {
         //FIND THE ID OF THE POST
-        String query = "select t1.userName,t1.numViewed,t2.numCreated from (select user.userName, count(userviewedpost.postID) as numViewed from user left join userviewedpost on user.userName = userviewedpost.userName group by user.userName) as t1 left join  (select user.userName, count(userpost.postID) as numCreated from user left join userpost on user.userName = userpost.userName group by user.userName) as t2 on t1.userName = t2.userName order by numViewed desc";
+        String query = "select t1.userName,t1.numViewed,t2.numCreated from (select user.userName, count(UserViewedPost.postID) as numViewed from user left join UserViewedPost on user.userName = UserViewedPost.userName group by user.userName) as t1 left join  (select user.userName, count(UserPost.postID) as numCreated from user left join UserPost on user.userName = UserPost.userName group by user.userName) as t2 on t1.userName = t2.userName order by numViewed desc";
         PreparedStatement getPostID = conn.prepareStatement(query);
         getPostID.executeQuery();
         ResultSet rs = getPostID.getResultSet();
