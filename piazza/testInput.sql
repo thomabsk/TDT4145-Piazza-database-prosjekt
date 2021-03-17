@@ -31,7 +31,8 @@ insert into UserPost values ("t@s.com", 6, "2021-02-09"), ("hanne@gmail.com", 1,
 
 insert into UserLikedPost values ("hanne@gmail.com", 6), ("hanne@gmail.com", 2), ("hanne@gmail.com", 3);
 
-insert into UserViewedPost values ("t@s.com", 1, "2021-01-03"), ("t@s.com", 3, "2021-01-03"), ("t@s.com", 6, "2021-03-01");
+insert into UserViewedPost values ("t@s.com", 1, "2021-01-03"), ("t@s.com", 3, "2021-01-03"), ("t@s.com", 6, "2021-03-01"), ("hanne@gmail.com", 1, "2021-01-03"), ("lotte@hotmail.no", 3, "2021-02-03"),
+("t@s.com", 2, "2021-02-03"), ("geir@outlook.no", 4, "2021-04-02"), ("sofie@ntnu.no", 5, "2021-02-02"), ("lise@stud.no", 6, "2021-01-02"), ("geir@outlook.no", 3, "2021-04-02"), ("geir@outlook.no", 1, "2021-04-02");
 
 
 
