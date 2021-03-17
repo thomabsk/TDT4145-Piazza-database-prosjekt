@@ -16,7 +16,6 @@ public class MakePostCtrl extends DBConn {
     private int postID;
 
 
-
     public MakePostCtrl (UserLoginCtrl userLoginCtrl) {
         connect();
         this.userLoginCtrl = userLoginCtrl;
@@ -43,41 +42,59 @@ public class MakePostCtrl extends DBConn {
     public void setCourseName(String courseName){
         this.courseName = courseName;
     }
-
-    public void viewAvailableFolders(){
+    public void viewAvailableCourses(){
         try {
-            //FIND THE ID OF THE POST
-            String query = "select * from folder";
+            //Print out all of the available courses
+            String query = "select courseID from course";
             PreparedStatement getPostID = conn.prepareStatement(query);
             getPostID.executeQuery();
             ResultSet rs = getPostID.getResultSet();
-            String firstCol = "folderID";
-            String secondCol = "Name";
-            String thirdCol = "courseID";
-            System.out.println("\n\n------------------------------------------");
-            System.out.format("|%-8s|%-15s|%-15s|%n",firstCol,secondCol,thirdCol);
-            System.out.println("------------------------------------------");
+            String firstCol = "courseID";
+            System.out.println("\n\n----------");
+            System.out.format("|%-8s|%n",firstCol);
+            System.out.println("----------");
             while(rs.next()) {
-                int folderIDLocal = rs.getInt("folderID");
-                String nameLocal = rs.getString("name");
                 String courseIDLocal = rs.getString("courseID");
-                //System.out.println(userName + ": " + numCreatedPosts+ " " + numViewedPosts);
-                System.out.format("|%-8d|%-15s|%-15s|%n", folderIDLocal, nameLocal, courseIDLocal);
+                System.out.format("|%-8s|%n", courseIDLocal);
             }
-            System.out.println("------------------------------------------");
+            System.out.println("----------");
             getPostID.close();
             }
             catch (Exception e) {
-                System.out.println("db error during getting user statistics "+e);
+                System.out.println("db error viewing courses "+e);
                 return;
             }
     }
+    //Prints out all the folders in the database
+    public void viewAvailableFolders(){
+        try {
+            //Print out all of the folders in the given course
+            String query = "select name from folder where courseID = ?";
+            PreparedStatement getPostID = conn.prepareStatement(query);
+            getPostID.setString(1, courseName);
+            getPostID.executeQuery();
+            ResultSet rs = getPostID.getResultSet();
+            String firstCol = "Folder name";
+            System.out.println("\n\n--------------");
+            System.out.format("|%-12s|%n",firstCol);
+            System.out.println("--------------");
+            while(rs.next()) {
+                String nameLocal = rs.getString("name");
+                //System.out.println(userName + ": " + numCreatedPosts+ " " + numViewedPosts);
+                System.out.format("|%-12s|%n", nameLocal);
+            }
+            System.out.println("--------------");
+            getPostID.close();
+            }
+            catch (Exception e) {
+                System.out.println("db error viewing folders "+e);
+                return;
+            }
+    }
+
+    //run makepost when all the parameters are set, to make the post with the given parameters.
     public void makePost(){
         try {
-
-
-            
-
             //FIND FOLDER ID FROM FOLDER NAME
             String query = "select folderID from folder where name=? and courseID=?";
             PreparedStatement findFolder = conn.prepareStatement(query);
@@ -88,7 +105,6 @@ public class MakePostCtrl extends DBConn {
             while (rs.next()) {
                 this.folderID = rs.getInt("folderID");
             }
-            System.out.println(this.folderID); 
             findFolder.close();
 
             //INSERT NEW THREAD
@@ -98,7 +114,6 @@ public class MakePostCtrl extends DBConn {
             makeThread.setInt(2,this.folderID);
             makeThread.executeUpdate();
             rs = makeThread.getResultSet();
-            System.out.println(tag); 
             makeThread.close();
 
             conn.commit();
@@ -112,8 +127,6 @@ public class MakePostCtrl extends DBConn {
             while(rs.next()) {
                 this.threadID = rs.getInt(1);
             }
-
-            System.out.println(this.threadID); 
             getThreadID.close();
 
             //MAKE A NEW POST
@@ -125,6 +138,7 @@ public class MakePostCtrl extends DBConn {
             createPost.close();
 
             conn.commit();
+            
             //FIND THE ID OF THE POST
             query = "SELECT LAST_INSERT_ID()";
             PreparedStatement getPostID = conn.prepareStatement(query);
@@ -158,6 +172,8 @@ public class MakePostCtrl extends DBConn {
 
             conn.commit();
             
+
+            System.out.println("\nYou just a made the post:  " + courseName + " - " + folderName + " - " + tag + " - " + text);
 
         } catch (Exception e) {
             System.out.println("db error during making of post= "+e);

@@ -2,7 +2,7 @@ package piazza;
 
 /**
  *
- * @author Svein Erik
+ * @author thomabsk
  */
 
 import java.sql.*;
@@ -12,15 +12,14 @@ public abstract class DBConn {
 
     //Edit these to connect to your own database
     private static final String DB_NAME = "piazza";
-    private static final String DB_USERNAME = "Thomas"; //Change to local username on MySQL
-    private static final String DB_PASSWORD = "vbdatdat123"; //Change to local password on MySQL
+    private static final String DB_USERNAME = "Thomas"; //Change to local username on MySQL or add to your database
+    private static final String DB_PASSWORD = "vbdatdat123"; //Change to local password on MySQL or add to your database
 
     protected Connection conn;
     public DBConn () {
     }
     public void connect() {
     	try {
-            // Class.forName("com.mysql.jdbc.Driver").newInstance(); when you are using MySQL 5.7
 	    Class.forName("com.mysql.cj.jdbc.Driver"); 
 	    // Properties for user and password.
             Properties p = new Properties();

@@ -81,7 +81,6 @@ public class InstructorReplyCtrl extends DBConn{
 
         conn.commit();
 
-
         //ADDS THE CREATED POST TO THE USER
         query = "insert into UserPost values (?,?,current_timestamp)";
         PreparedStatement userPost= conn.prepareStatement(query);
@@ -102,9 +101,7 @@ public class InstructorReplyCtrl extends DBConn{
 
         conn.commit();
 
-
-
-        //UPDATE THREAD WITH COLOR
+        //UPDATE THREAD WITH COLOR SINCE AN INSTRUCTOR JUST REPLIED
         query = "update thread set color=? where threadID = ?";
         PreparedStatement updateThread = conn.prepareStatement(query);
         updateThread.setString(1, "instructor-reply");

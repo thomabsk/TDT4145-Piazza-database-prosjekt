@@ -12,9 +12,11 @@ public class Piazza {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         boolean loggedIntoAUser = false;
         UserLoginCtrl loginCtrl = new UserLoginCtrl();
         boolean not_quit = true;
+
         while(not_quit){
             if(loginCtrl.isLoggedIn()){
                 System.out.println("\n\n");
@@ -28,31 +30,37 @@ public class Piazza {
             int choice = myInput.nextInt();
             
             switch(choice){
-                case 1: {
-                    myInput.nextLine();
-                    System.out.println("\nEnter username: ");
-                    String userName = myInput.nextLine();
-                    System.out.println("\nEnter password: ");
-                    String password = myInput.nextLine();
-                    
-                    loginCtrl.loginUser(userName, password);
-                    if(loginCtrl.isLoggedIn()){ 
-                        loggedIntoAUser = true;
+                case 1: { //Log in to user
+                    if(!loggedIntoAUser){
+                        myInput.nextLine();
+                        System.out.println("\nEnter username: ");
+                        String userName = myInput.nextLine();
+                        System.out.println("\nEnter password: ");
+                        String password = myInput.nextLine();
+                        
+                        loginCtrl.loginUser(userName, password);
+                        if(loginCtrl.isLoggedIn()){ 
+                            loggedIntoAUser = true;
+                        }
+                        else{
+                            System.out.println("Password and/or username is wrong!"); 
+                        }
                     }
                     else{
-                        System.out.println("Password and/or username is wrong!"); 
+                        System.out.println("\nYou are already logged in!");
                     }
                     break;
                 }
-                case 2: {
+                case 2: { //Make a post in a folder
                     if(loggedIntoAUser){
                         MakePostCtrl makePostCtrl = new MakePostCtrl(loginCtrl);
                         myInput.nextLine();
-                        makePostCtrl.viewAvailableFolders();
+                        makePostCtrl.viewAvailableCourses();
                         System.out.println("\n Which courseID is the folder in? (courseID)");
                         String courseID = myInput.nextLine();
                         makePostCtrl.setCourseName(courseID);
 
+                        makePostCtrl.viewAvailableFolders();
                         System.out.println("\nWhich folder do you want to post in? (name)");
                         String folderName = myInput.nextLine();
                         makePostCtrl.setFolderName(folderName);
@@ -69,7 +77,7 @@ public class Piazza {
                     }
                     break;
                 } 
-                case 3: {
+                case 3: { //Instructor reply to a thread
                     if(loggedIntoAUser && loginCtrl.getUserType().equals("instructor")){
                         InstructorReplyCtrl instrReply = new InstructorReplyCtrl(loginCtrl);
                         instrReply.viewAvailableThreads();
@@ -88,7 +96,7 @@ public class Piazza {
                     }
                     break;
                 }
-                case 4: {
+                case 4: { //Search for posts with a "WAL"
                     if(loggedIntoAUser){
                         myInput.nextLine();
                         System.out.println("\nWhat are you searching for: ");
@@ -105,7 +113,7 @@ public class Piazza {
                     
                     break;
                 }
-                case 5: {
+                case 5: { //Print out statistics for the users, if you are an instructor
                     if(loggedIntoAUser){
                         if(loginCtrl.getUserType().equals("instructor")){
                             InstructorViewStatsCtrl stats = new InstructorViewStatsCtrl();
@@ -122,12 +130,12 @@ public class Piazza {
                     }
                     break;
                 }
-                case 6: {
+                case 6: { //Log out of user
                     loginCtrl = new UserLoginCtrl();
                     loggedIntoAUser = false;
                     break;
                 }
-                case 7:{
+                case 7:{ //Quit the program
                     not_quit=false;
                     System.out.println("Goodbye!");
                     break;
