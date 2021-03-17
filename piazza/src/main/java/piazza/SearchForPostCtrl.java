@@ -22,9 +22,8 @@ public class SearchForPostCtrl extends DBConn {
     private UserLoginCtrl userLoginCtrl;
 
     //CONNECTING TO USER?
-    public SearchForPostCtrl (UserLoginCtrl userLoginCtrl) {
+    public SearchForPostCtrl () {
         connect();
-        this.userLoginCtrl = userLoginCtrl;
         try {
             conn.setAutoCommit(false);
         } catch (SQLException e) {
@@ -38,6 +37,7 @@ public class SearchForPostCtrl extends DBConn {
         this.postSearch = postSearch1;
     }
 
+    
     //SEARCH FOR POSTS THAT CONTAINS SEARCHWORD
     public void searchForPost(){
         try {
