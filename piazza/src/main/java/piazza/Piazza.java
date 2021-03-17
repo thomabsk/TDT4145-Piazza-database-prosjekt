@@ -14,7 +14,8 @@ public class Piazza {
     public static void main(String[] args) {
         boolean loggedIntoAUser = false;
         UserLoginCtrl loginCtrl = new UserLoginCtrl();
-        while(true){
+        boolean not_quit = true;
+        while(not_quit){
             if(loginCtrl.isLoggedIn()){
                 System.out.println("\n\n");
                 System.out.println("You are logged in to " + loginCtrl.getUserName() +" as " + loginCtrl.getUserType() + "!");
@@ -23,7 +24,7 @@ public class Piazza {
                 System.out.println("You are not logged in.");
             }
             Scanner myInput = new Scanner(System.in);
-            System.out.println("Welcome to Piazza! Please select one of the 5 user cases below!\n1. Log in to user\n2. Make a post in a folder\n3. Reply to a post by ID as an instructor\n4. Search for a post with a specific keyword\n5. View statistics as an instructor\n6. Log out\n\nYour choice (input number): ");
+            System.out.println("Welcome to Piazza! Please select one of the 5 user cases below!\n1. Log in to user\n2. Make a post in a folder\n3. Reply to a post by ID as an instructor\n4. Search for a post with a specific keyword\n5. View statistics as an instructor\n\n6. Log out\n7. Quit program\n\nYour choice (input number): ");
             int choice = myInput.nextInt();
             
             switch(choice){
@@ -126,7 +127,11 @@ public class Piazza {
                     loggedIntoAUser = false;
                     break;
                 }
-                
+                case 7:{
+                    not_quit=false;
+                    System.out.println("Goodbye!");
+                    break;
+                }
             }
         }
     }

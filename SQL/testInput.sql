@@ -12,8 +12,8 @@ insert into user values ("t@s.com", "thomas123", "instructor"), ("hanne@gmail.co
 insert into post (text, nrGoodComment) values ("Korleis løyse oppgåve 1?", 5), ("Forelesing 12 på fredag", 12), ("Den er grei", 2),
 ("Når starter den?", 0), ("Kor mange poeng kan ein få på eksamen?", 2), ("Sjå side 12 i boka", 1), ("Korleis løyse oppgåve 2?", 7);
 
-insert into thread(tag, color, folderID, postID) values ("question", "instructor-reply", 1, 1), ("announcement", "student-reply", 2, 2), ("question", "no-reply", 6, 5),
-("question", "no-reply", 4, 7);
+insert into thread(tag, color, folderID, postID) values ("Question", "instructor-reply", 1, 1), ("Announcement", "student-reply", 2, 2), ("Question", "no-reply", 6, 5),
+("Question", "no-reply", 4, 7);
 
 update post set threadID = 1 where postID = 1;
 update post set threadID = 2 where postID = 2;
