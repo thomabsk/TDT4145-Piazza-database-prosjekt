@@ -10,4 +10,15 @@ This Java program uses SQL to solve the Piazza project given in TDT4145 Database
 4. A user searches for posts with a specific keyword.
 5. An instructor views statistics for users and how many post they have read and how many they have created.
 
-To use this program you need to download the file that contains both the SQL script and the Java Code. When you run the code you'll get a menu for the different use cases. You need to be logged in (use case 1) to execute the four other use cases. To log in, you can use the e-mails and passwords in "testInput.sql". This can for example be **t@s.com**, **thomas123**.
+
+**Steps after downloading both SQL and Java files:**
+1. Create new scheme named *piazza*.
+2. Run *project_sql_script.sql* to create tables in this scheme.
+3. Run *testInput.sql* to fill the tables.
+4. Run *piazza.java*.
+5. Log in as instructor:
+    username: *t@s.com* 
+    password: *thomas123*
+    or log in as student:
+    username: *geir@outlook.no*
+    password: *pizzabolle*
