@@ -12,8 +12,8 @@ public abstract class DBConn {
 
     //Edit these to connect to your own database
     private static final String DB_NAME = "piazza";
-    private static final String DB_USERNAME = "Thomas";
-    private static final String DB_PASSWORD = "vbdatdat123";
+    private static final String DB_USERNAME = "Thomas"; //Change to local username on MySQL
+    private static final String DB_PASSWORD = "vbdatdat123"; //Change to local password on MySQL
 
     protected Connection conn;
     public DBConn () {

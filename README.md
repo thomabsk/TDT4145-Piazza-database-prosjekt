@@ -15,10 +15,11 @@ This Java program uses SQL to solve the Piazza project given in TDT4145 Database
 1. Create new scheme named *piazza*.
 2. Run *project_sql_script.sql* to create tables in this scheme.
 3. Run *testInput.sql* to fill the tables.
-4. Run *piazza.java*.
-5. Log in as instructor:
+4. Go to file *src\main\java\piazza\DBConn.java* and change *DB_USERNAME* and *DB_PASSWORD* to your local user account in MySQL.
+5. Run *piazza.java*.
+6. Log in as instructor:
 username: *t@s.com*, 
 password: *thomas123*,
-6. Or log in as student:
+7. Or log in as student:
 username: *geir@outlook.no*,
 password: *pizzabolle*
