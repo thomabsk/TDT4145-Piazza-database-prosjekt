@@ -8,12 +8,6 @@ package piazza;
 
 import java.sql.*;
 
-/** 
- * TO TEST THIS FILE:
- * SearchForPostCtrl searchForPostCtrl = new SearchForPostCtrl(loginCtrl);
- * searchForPostCtrl.setPostSearch("SEARCHWORD");
- * searchForPostCtrl.searchForPost();
- */
 
 
 public class SearchForPostCtrl extends DBConn {
@@ -21,7 +15,7 @@ public class SearchForPostCtrl extends DBConn {
     private int postID;
     private UserLoginCtrl userLoginCtrl;
 
-    //CONNECTING TO USER?
+    //CHECKS IF YOU ARE LOGGED IN
     public SearchForPostCtrl () {
         connect();
         try {
