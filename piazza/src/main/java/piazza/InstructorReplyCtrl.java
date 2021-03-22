@@ -30,11 +30,13 @@ public class InstructorReplyCtrl extends DBConn{
 
     public void viewAvailableThreads(){
         try {
-            //FIND THE ID OF THE POST
+            //FIND THE ID OF THE POSTS THAT ARE THREADS
             String query = "select postID, text from thread natural join post";
             PreparedStatement getPosts = conn.prepareStatement(query);
             getPosts.executeQuery();
             ResultSet rs = getPosts.getResultSet();
+
+            //PRINTS THEM OUT IN A NEAT FASHION
             String firstCol = "PostID";
             String secondCol = "Text";
             System.out.println("\n\n------------------------------------------------------");
@@ -56,62 +58,60 @@ public class InstructorReplyCtrl extends DBConn{
     }
     public void makeReply(){
         try{
+            //FIND THREAD ID
+            String query = "select threadID from post where postID=?";
+            PreparedStatement findFolder = conn.prepareStatement(query);
+            findFolder.setInt(1,postID);
+            findFolder.executeQuery();
+            ResultSet rs = findFolder.getResultSet();
+            while (rs.next()) {
+                this.threadID = rs.getInt("threadID");
+            }
+            findFolder.close();
 
-        
-        //FIND THREAD ID
-        String query = "select threadID from post where postID=?";
-        PreparedStatement findFolder = conn.prepareStatement(query);
-        findFolder.setInt(1,postID);
-        findFolder.executeQuery();
-        ResultSet rs = findFolder.getResultSet();
-        while (rs.next()) {
-            this.threadID = rs.getInt("threadID");
-        }
-        findFolder.close();
+            //INSERT NEW POST INTO THREAD
+            query = "insert into post (text, nrGoodComment, threadID) values (?,?,?)";
+            PreparedStatement makePost = conn.prepareStatement(query);
+            makePost.setString(1, text);
+            makePost.setInt(2,0);
+            makePost.setInt(3,this.threadID);
+            makePost.executeUpdate();
+            rs = makePost.getResultSet();
+            makePost.close();
 
-        //INSERT NEW POST INTO THREAD
-        query = "insert into post (text, nrGoodComment, threadID) values (?,?,?)";
-        PreparedStatement makePost = conn.prepareStatement(query);
-        makePost.setString(1, text);
-        makePost.setInt(2,0);
-        makePost.setInt(3,this.threadID);
-        makePost.executeUpdate();
-        rs = makePost.getResultSet();
-        makePost.close();
+            conn.commit();
 
-        conn.commit();
+            //ADDS THE CREATED POST TO THE USER
+            query = "insert into UserPost values (?,?,current_timestamp)";
+            PreparedStatement userPost= conn.prepareStatement(query);
+            userPost.setString(1,userLoginCtrl.getUserName());
+            userPost.setInt(2, this.postID);
+            userPost.executeUpdate();
+            userPost.close();
 
-        //ADDS THE CREATED POST TO THE USER
-        query = "insert into UserPost values (?,?,current_timestamp)";
-        PreparedStatement userPost= conn.prepareStatement(query);
-        userPost.setString(1,userLoginCtrl.getUserName());
-        userPost.setInt(2, this.postID);
-        userPost.executeUpdate();
-        userPost.close();
+            conn.commit();
 
-        conn.commit();
+            //ADDS THE VIEWED POST TO THE USER
+            query = "insert into UserViewedPost values (?,?,current_timestamp)";
+            PreparedStatement userViewedPost= conn.prepareStatement(query);
+            userViewedPost.setString(1,userLoginCtrl.getUserName());
+            userViewedPost.setInt(2, this.postID);
+            userViewedPost.executeUpdate();
+            userViewedPost.close();
 
-        //ADDS THE VIEWED POST TO THE USER
-        query = "insert into UserViewedPost values (?,?,current_timestamp)";
-        PreparedStatement userViewedPost= conn.prepareStatement(query);
-        userViewedPost.setString(1,userLoginCtrl.getUserName());
-        userViewedPost.setInt(2, this.postID);
-        userViewedPost.executeUpdate();
-        userViewedPost.close();
+            conn.commit();
 
-        conn.commit();
+            //UPDATE THREAD WITH COLOR SINCE AN INSTRUCTOR JUST REPLIED
+            query = "update thread set color=? where threadID = ?";
+            PreparedStatement updateThread = conn.prepareStatement(query);
+            updateThread.setString(1, "instructor-reply");
+            updateThread.setInt(2, this.threadID);
+            updateThread.executeUpdate();
+            updateThread.close();
+            
+            conn.commit();
 
-        //UPDATE THREAD WITH COLOR SINCE AN INSTRUCTOR JUST REPLIED
-        query = "update thread set color=? where threadID = ?";
-        PreparedStatement updateThread = conn.prepareStatement(query);
-        updateThread.setString(1, "instructor-reply");
-        updateThread.setInt(2, this.threadID);
-        updateThread.executeUpdate();
-        updateThread.close();
-        
-        conn.commit();
-
-        System.out.println("You made the comment!");
+            System.out.println("You made the comment!");
 
         } catch (Exception e) {
             System.out.println("db error during making of post= "+e);

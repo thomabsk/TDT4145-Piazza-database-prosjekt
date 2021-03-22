@@ -9,7 +9,6 @@ public class UserLoginCtrl extends DBConn {
 
     public UserLoginCtrl () {
         connect();
-        // La laging av avtale vÃ¦re en transaksjon
         try {
             conn.setAutoCommit(false);
         } catch (SQLException e) {
@@ -28,6 +27,8 @@ public class UserLoginCtrl extends DBConn {
     public boolean isLoggedIn(){
         return logged_in;
     }
+
+    //Makes the object and checks the password, saves the new state.
     public void loginUser(String email, String password){
         user = new User(email);
         user.initialize(conn);

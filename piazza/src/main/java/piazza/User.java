@@ -16,6 +16,8 @@ public class User extends ActiveDomainObject {
         this.email = email;
     }
 
+
+    //Checks the password against the real password form the database.
     public boolean checkCorrectPassword(String password){
         return this.password.equals(password);
     }
