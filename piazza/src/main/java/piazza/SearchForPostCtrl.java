@@ -8,8 +8,10 @@ package piazza;
 
 import java.sql.*;
 
-
-
+/*
+*   Class used for searching through the database for keywords
+*
+*/
 public class SearchForPostCtrl extends DBConn {
     private String postSearch;
     private int postID;

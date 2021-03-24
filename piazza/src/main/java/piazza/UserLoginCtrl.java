@@ -3,6 +3,11 @@ package piazza;
 import java.sql.*;
 import java.util.*;
 
+
+/*
+*
+* Controller used for logging into a user in the database.
+*/
 public class UserLoginCtrl extends DBConn {
     private User user;
     private boolean logged_in = false;
@@ -28,8 +33,11 @@ public class UserLoginCtrl extends DBConn {
         return logged_in;
     }
 
-    //Makes the object and checks the password, saves the new state.
+    /* 
+    *  Makes the object and checks the password toward this object, saves the new state of login.
+    */
     public void loginUser(String email, String password){
+
         user = new User(email);
         user.initialize(conn);
 

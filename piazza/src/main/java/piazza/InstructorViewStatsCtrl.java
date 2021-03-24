@@ -4,7 +4,9 @@ package piazza;
 import java.sql.*;
 
 
-
+/*
+* Controller used for viewing statistics regarding posts viewed/created for each user
+*/
 public class InstructorViewStatsCtrl extends DBConn {
 
     public InstructorViewStatsCtrl() {
@@ -36,7 +38,6 @@ public class InstructorViewStatsCtrl extends DBConn {
             String userName = rs.getString("userName");
             int numCreatedPosts = rs.getInt("numCreated");
             int numViewedPosts = rs.getInt("numViewed");
-            //System.out.println(userName + ": " + numCreatedPosts+ " " + numViewedPosts);
             System.out.format("|%-20s|%-15d|%-15d|%n", userName, numViewedPosts,numCreatedPosts);
         }
         System.out.println("------------------------------------------------------");

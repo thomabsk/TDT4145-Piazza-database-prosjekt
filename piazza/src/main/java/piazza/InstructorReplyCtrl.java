@@ -3,6 +3,10 @@ package piazza;
 import java.sql.*;
 import java.util.*;
 
+
+/*
+* Controller used for replying to a thread as an instructor
+*/
 public class InstructorReplyCtrl extends DBConn{
     private int postID;
     private int threadID;
@@ -27,7 +31,7 @@ public class InstructorReplyCtrl extends DBConn{
     public void setText(String text){
         this.text = text;
     }
-
+    //Prints out all the threads in the database
     public void viewAvailableThreads(){
         try {
             //FIND THE ID OF THE POSTS THAT ARE THREADS
@@ -45,7 +49,6 @@ public class InstructorReplyCtrl extends DBConn{
             while(rs.next()) {
                 int postID = rs.getInt("postID");
                 String text = rs.getString("text");
-                //System.out.println(userName + ": " + numCreatedPosts+ " " + numViewedPosts);
                 System.out.format("|%-20d|%-15s%n", postID, text);
             }
             System.out.println("------------------------------------------------------");

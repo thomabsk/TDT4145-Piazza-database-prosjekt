@@ -4,7 +4,9 @@ import java.sql.*;
 import java.util.*;
 
 
-
+/*
+* Controller used for making posts as a student
+*/
 public class MakePostCtrl extends DBConn {
     private String courseName;
     private String folderName;
@@ -42,6 +44,8 @@ public class MakePostCtrl extends DBConn {
     public void setCourseName(String courseName){
         this.courseName = courseName;
     }
+
+    //Shows all the courses available in the database
     public void viewAvailableCourses(){
         try {
             //Print out all of the available courses
@@ -49,6 +53,7 @@ public class MakePostCtrl extends DBConn {
             PreparedStatement getPostID = conn.prepareStatement(query);
             getPostID.executeQuery();
             ResultSet rs = getPostID.getResultSet();
+
             String firstCol = "courseID";
             System.out.println("\n\n----------");
             System.out.format("|%-8s|%n",firstCol);
@@ -92,7 +97,7 @@ public class MakePostCtrl extends DBConn {
             }
     }
 
-    //run makepost when all the parameters are set, to make the post with the given parameters.
+    //Run makepost when all the parameters are set, to make the post with the given parameters.
     public void makePost(){
         try {
             //FIND FOLDER ID FROM FOLDER NAME

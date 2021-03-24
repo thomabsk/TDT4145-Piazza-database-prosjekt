@@ -7,6 +7,12 @@ package piazza;
 
 import java.sql.*;
 
+
+/*
+*
+* Class used to link to the user objects in our database.
+*
+*/
 public class User extends ActiveDomainObject {
     private String email;
     private String password;
@@ -21,6 +27,8 @@ public class User extends ActiveDomainObject {
     public boolean checkCorrectPassword(String password){
         return this.password.equals(password);
     }
+
+    
     public String getUserName(){
         return this.email;
     }
@@ -30,7 +38,8 @@ public class User extends ActiveDomainObject {
     }
     public void initialize (Connection conn) {
         try {
-            //Statement stmt = conn.createStatement();
+
+            //FINDS THE USER WITH A GIVEN EMAIL AND LOADS PASSWORD AND TYPE
             String query = "select password, type from user where userName=?";
             PreparedStatement loginUser = conn.prepareStatement(query);
             loginUser.setString(1,email);
@@ -48,10 +57,12 @@ public class User extends ActiveDomainObject {
         }
     }
     
+    // REFRESH WITH DATABASE INFORMATION
     public void refresh (Connection conn) {
         initialize (conn);
     }
     
+    //SAVES THE EDITED USER BACK INTO THE DATABASE
     public void save (Connection conn) {
         try {
             Statement stmt = conn.createStatement(); 

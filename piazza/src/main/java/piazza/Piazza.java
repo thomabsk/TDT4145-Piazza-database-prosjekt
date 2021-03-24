@@ -117,10 +117,13 @@ public class Piazza {
                 }
                 case 4: { //Search for posts with a "WAL"
                     if(loginCtrl.isLoggedIn()){
+
+                        //Get the search word
                         myInput.nextLine();
                         System.out.println("\nWhat are you searching for: ");
                         String searchWord = myInput.nextLine();
 
+                        //Makes the search
                         SearchForPostCtrl searchForPostCtrl = new SearchForPostCtrl();
                         searchForPostCtrl.setPostSearch(searchWord);
                         System.out.println("\nThe following postIDs include the search: " + searchWord);
